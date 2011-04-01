@@ -9,12 +9,14 @@ The `serve` macro:
 
 * Is safe to run multiple times.
 * Finds a free port if you do not specify one.
-* Opens up a web browser to view your handler.
+* Opens up a web browser to view your handler, or if you don't want
+  this, call the `serve-headless` macro instead.
 * Automatically takes into account any changes made to your
   handler.
 * Wraps your handler in the `wrap-stacktrace` middleware.
 * Ensures that the `swank.core/break` function works correctly inside
   your handler.
+
 
 ## Example
 
@@ -36,4 +38,4 @@ The `serve` macro:
 
 Include the following dependency in your Leiningen project file:
 
-    [ring-serve "0.1.0"]
+    [ring-serve "0.1.1"]
