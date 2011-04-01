@@ -58,14 +58,15 @@
         port      (.getPort connector)]
     (str "http://" host ":" port)))
 
-(defn serve* [handler & [port]]
+(defn serve* [handler & [port headless?]]
   (stop-server)
   (reset! jetty-server
           (if port
             (start-server handler port)
             (start-server handler)))
   (println "Started web server on port" (server-port))
-  (browse-url (server-url))
+  (when-not headless?
+    (browse-url (server-url)))
   nil)
 
 (defmacro serve
@@ -76,3 +77,12 @@
   (if (symbol? handler)
     `(serve* (var ~handler) ~port)
     `(serve* ~handler ~port)))
+
+(defmacro serve-headless
+  "Start a development web server that runs the supplied handler in a
+  background thread. Any changes to the handler will be automatically
+  visible on the server.  A web browser is NOT invoked!"
+  [handler & [port]]
+  (if (symbol? handler)
+    `(serve* (var ~handler) ~port true)
+    `(serve* ~handler ~port true)))
