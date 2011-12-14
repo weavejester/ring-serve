@@ -38,4 +38,4 @@ The `serve` macro:
 
 Include the following dependency in your Leiningen project file:
 
-    [ring-serve "0.1.1"]
+    [ring-serve "0.1.2"]
