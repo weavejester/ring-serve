@@ -1,7 +1,7 @@
 (ns ring.util.serve
   "Development web server for Ring handlers."
   (:import java.net.BindException
-           org.mortbay.log.Logger)
+           org.eclipse.jetty.util.log.Logger)
   (:use clojure.java.browse
         ring.middleware.stacktrace
         ring.middleware.swank
@@ -9,16 +9,12 @@
 
 (deftype SilentLogger []
   Logger
-  (debug [logger msg arg0 arg1])
-  (debug [logger msg th])
   (getLogger [logger name] logger)
-  (info [logger msg arg0 arg1])
-  (isDebugEnabled [logger] false)
-  (warn [logger msg arg0 arg1]))
+  (isDebugEnabled [logger] false))
 
 ;; Stop Jetty logging everything
 (System/setProperty
-  "org.mortbay.log.class"
+  "org.eclipse.jetty.util.log.class"
   "ring.util.serve.SilentLogger")
 
 (defonce jetty-server (atom nil))
